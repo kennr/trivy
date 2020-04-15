@@ -30,6 +30,8 @@ func WriteResults(format string, output io.Writer, results Results, outputTempla
 		writer = &TableWriter{Output: output, Light: light}
 	case "json":
 		writer = &JsonWriter{Output: output}
+	case "nr":
+		writer = &JsonWriter{Output: output}
 	case "template":
 		tmpl, err := template.New("output template").Parse(outputTemplate)
 		if err != nil {

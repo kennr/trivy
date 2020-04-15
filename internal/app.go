@@ -36,7 +36,7 @@ var (
 	formatFlag = cli.StringFlag{
 		Name:   "format, f",
 		Value:  "table",
-		Usage:  "format (table, json, template)",
+		Usage:  "format (table, json, nr, template)",
 		EnvVar: "TRIVY_FORMAT",
 	}
 
@@ -262,6 +262,12 @@ func showVersion(cacheDir, outputFormat, version string, outputWriter io.Writer)
 
 	switch outputFormat {
 	case "json":
+		b, _ := json.Marshal(VersionInfo{
+			Version:         version,
+			VulnerabilityDB: dbMeta,
+		})
+		fmt.Fprintln(outputWriter, string(b))
+	case "nr":
 		b, _ := json.Marshal(VersionInfo{
 			Version:         version,
 			VulnerabilityDB: dbMeta,
